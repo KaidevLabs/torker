@@ -25,3 +25,24 @@
 </p>
 
 </div>
+## Building and publishing
+
+The Tor version this image ships is determined by the pinned Alpine release in
+the `Dockerfile`. Bump the base image deliberately rather than floating it, then
+publish the image tagged with the Tor version it contains — that is the tag
+consumers pin.
+
+```bash
+docker build -t everlyrusher/torker:0.4.9.15 .
+docker tag everlyrusher/torker:0.4.9.15 everlyrusher/torker:latest
+docker push everlyrusher/torker:0.4.9.15
+docker push everlyrusher/torker:latest
+```
+
+Verify what you actually built before pushing it anywhere:
+
+```bash
+docker run --rm --entrypoint tor everlyrusher/torker:0.4.9.15 --version
+```
+
+Clients reference the version tag, never `latest`.

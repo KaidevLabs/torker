@@ -1,8 +1,9 @@
 # set alpine as the base image of the Dockerfile
-FROM alpine:3.20
+# alpine:3.23 ships Tor 0.4.9.15 — the image tag mirrors that version
+FROM alpine:3.23
 
-# update the package repository and install Tor
-RUN apk update && apk add tor
+# install Tor
+RUN apk add --no-cache tor
 
 # Copy over the torrc created above and set the owner to `tor`
 COPY torrc /etc/tor/torrc
